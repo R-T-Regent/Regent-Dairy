@@ -1,0 +1,40 @@
+一、安装搜狗拼音输入法
+1：卸载fcitx
+sudo apt-get --purge fcitx*
+2：清理系统内的无用的软件包
+sudo apt-get --purge autoremove
+3：到搜狗官网下载搜狗拼音输入法，选择你系统对应的软件包，我系统是64位的，所以我选择了amd64的
+http://pinyin.sogou.com/linux/?r=pinyin
+4：用gdebi这个软件安装，它能够安装所有依赖关系，如果你没有安装gdebi，请先安装该软件；我用的是
+这种方法，其它的方法我没试过，所以不知道行不行
+sudo gdebi sogou_pinyin_linux_1.0.0.0014_amd64.deb
+5:注销下系统就可以了
+
+二、给chromium安装 flash player
+sudo apt-get install pepperflashplugin-nonfree
+sudo update-pepperflashplugin-nonfree --install
+
+或者，推荐更好的办法，装chrome,这个flash player 直接正常使用.
+1.添加PPA
+从Google Linux Repository（http://www.google.com/linuxrepositories/）下载安装Key，或把下面的代码复制进终端，回车，需要管理员密码
+wget -q -O - 
+https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+Key安装好后，在终端输入：
+sudo sh -c 'echo "deb 
+http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+2.更新
+在终端输入：sudo apt-get update
+3.安装
+安装稳定版Chrome，在终端输入：sudo apt-get install google-chrome-stable
+安装Beta版Chrome，在终端输入：sudo apt-get install google-chrome-beta
+安装不稳定版Chrome，在终端输入：sudo apt-get install google-chrome-unstable
+
+三、Install git
+sudo apt-get install git
+git config --global user.name "R-T-Regent"
+git config --global user.email "r_t_regent@foxmail.com"
+ssh-keygen -t rsa -C "r_t_regent@foxmail.com"
+git clone git@github.com:r-t-regent/***.git
+git add
+git commit -m "..."
+git push / pull
