@@ -1,0 +1,33 @@
+From http://blog.csdn.net/iamlvshijie/article/details/8480892
+1 下载 JLink  的linux的驱动
+
+http://www.segger.com/cms/jlink-software.html
+那个要求的序列号可以随便输入的。
+
+2 安装
+
+tar xvzf JLink_Linux_V422.tgz
+查看里面的readme文件里面有操作步骤
+
+3 
+
+安装共享lib：
+cp libjlinkarm.so.* /usr/lib
+
+让动态链接库为系统所共享：
+ldconfig
+
+复制到/usr/bin/
+cp JLinkGDBServer /usr/bin/
+
+cp JLinkExe /usr/bin/
+
+使能普通用户权限运行JLinkExe：
+cp 45-jlink.rules /etc/udev/rules.d/
+
+Make sure that you are member of the group "plugdev"
+
+usermod -a -G plugdev <Username>
+
+这样之后就可以直接使用：
+JLinkExe
