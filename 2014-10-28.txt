@@ -5,3 +5,6 @@
 更新了以前所有的日志。全部改为UTF-8 No BOM编码。
 （万恶的Windows 记事本）
 父亲大人最近打电话的频率增加了。明天打个电话给奶奶吧。
+sudo add-apt-repository ppa:nvbn-rm/ppa  
+sudo apt-get update  
+sudo apt-get install everpad 安装everpad。
