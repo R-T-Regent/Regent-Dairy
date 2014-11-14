@@ -1,0 +1,81 @@
+安装 Gnome shell
+
+一旦升级已经完成，可以使用下面的命令在 Ubuntu 中安装 Gnome3.10。
+
+    sudo apt-get install gnome-shell
+
+安装 Gnome 特定的应用程序 [可选]
+
+这一步是可选的。你可能想安装一些 Gnome 特定的应用程序以达到 Gnome 3.10 在 Ubuntu 中得完美体验。你也许会遇到一些应用程序的相关问题。
+
+    sudo apt-get install gnome-weather gnome-music gnome-maps gnome-documents gnome-boxes gnome-shell-extensions gnome-tweak-tool gnome-clocks
+
+卸载 Gnome 3.10:
+
+不喜欢 Gnome 3.10 了？不用担心，通过deleting PPA卸载它们。要做到这一点，你需要安装 PPA Purge（如果尚未安装）。使用下面的命令：
+
+    sudo apt-get install ppa-purge
+
+之后，安装你所安装的 PPA：
+
+    sudo ppa-purge ppa:gnome3-team/gnome3-staging
+    sudo ppa-purge ppa:gnome3-team/gnome3-next
+
+在 Ubuntu13.10 版本库中是可以恢复 Gnome 3.10 到 Gnome 3.8。要想完全删除 Gnome 3，使用以下命令：
+
+    sudo apt-get remove gnome-shell ubuntu-gnome-desktop
+
+当然，你应该删除任何你专为 Gnome 3.10 安装的应用程序。
+
+
+步骤：
+
+1.卸掉ibus。
+
+killall ibus-daemon
+
+sudo apt-get purge ibus
+
+2.安装fcitx。
+
+sudo apt-get install fcitx fcitx-googlepinyin fcitx-anthy
+
+NOTE:这里强烈提醒，千万别按网上的介绍加ppa，一定要用ubuntu的官方源！！！
+
+这步安装应该很顺利，装完后打开im-switch（如果没有就apt装一下），设定成使用fcitx，注销，重新登录。
+
+3.安装语言支持。
+
+重新登录后应该能看到输入法图标了，打开终端试试，中文已经没问题了，但调用anthy的话会立遭失败！
+
+不要紧张，其实打开系统设置里的语言支持装上日语就行了……如果像我一样找不到语言（呃，好吧，我也不知道什么时候把它给卸掉了）：
+
+sudo apt-get install language-selector-gnome
+
+增加了语言支持后，重启输入法再试试，应该就可以输入了，打个お早う试试，吼吼～～
+
+4. 安装搜狗。
+
+搜狗在官方源里是没有，所以现在要加上ppa了
+
+sudo add-apt-repository ppa:fcitx-team/nightly
+
+sudo apt-get update
+
+源设置好后就可以装了
+
+sudo apt-get install fcitx-sogoupinyin
+
+装完重启输入法试试，应该没问题了。
+
+最后，由于保守地担心以后升级时一不留神就可能升成ppa里的样子，于是，怀着卑微谦谨的心，我删掉了ppa！
+
+cd /etc/apt/sources.list.d/
+
+sudo rm fcitx-team-nightly-saucy.list
+
+sudo apt-get update
+
+*******************************************
+
+另附：从ubuntu13开始的字体虚虚的，还是习惯12的样子啊，装完输入法后做得第一件事就是......把/etc/fonts/conf.avail/69-language-selector-zh-cn.conf的内容直接换成12的样子！！
