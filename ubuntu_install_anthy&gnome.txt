@@ -1,3 +1,7 @@
+安装GDM以及默认的LightDM。这是可选的，但是还是建议各位如很多人提醒的LightDM问题（这句话不通顺，但是不太理解，还请组长看一下）。打开终端（Ctrl+Alt+T），并使用下面的命令：
+
+    sudo apt-get install gdm
+
 安装 Gnome shell
 
 一旦升级已经完成，可以使用下面的命令在 Ubuntu 中安装 Gnome3.10。
