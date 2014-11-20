@@ -1,0 +1,92 @@
+Thinkpad 安装无线网卡驱动 
+首先查看网卡状态，终端命令sudo lshw -C network
+信息如下：
+
+    *-network UNCLAIMED
+
+    description: Network controller
+
+    product: Broadcom Corporation
+
+    vendor: Broadcom Corporation
+
+    physical id: 0
+
+    bus info: pci@0000:03:00.0
+
+    version: 01
+
+    width: 64 bits
+
+    clock: 33MHz
+
+    capabilities: pm msi pciexpress bus_master cap_list
+
+    configuration: latency=0
+
+    resources: memory:e4100000-e4107fff
+
+发现无线网卡不能正常工作，并且网卡为博通的网卡。进一步查询网卡的型号，终端输入
+sudo lspci -vnn | grep 14e4
+信息如下：
+
+    03:00.0 Network controller [0280]: Broadcom Corporation Device [14e4:4365] (rev 01)
+
+  由此，网卡型号为博通4365，属于43系列，移步到博通官网下载64位Linux无线网卡驱动
+http://zh-cn.broadcom.com/support/802.11/linux_sta.php
+下载压缩包后，直接终端解压编译，编译成功，生成wl.ko文件。
+在编译驱动成功之后，紧接着加载两个模块，终端输入
+sudo modprobe lib80211
+sudo modprobe cfg80211
+安装驱动
+sudo insmod wl.ko（在编译生成wl.ko文件的目录执行该命令），不出意外系统自动弹出无线识别提示，正常工作。可以参考官网的readme.txt文件，有详细的编译及错误解决方法。
+
+另外，快速关闭和开启手提电脑的触摸板命令为：synclient touchpadoff=1（关闭），synclient touchpadoff=0（开启）
+可以将这两个命令写入bashrc中，记得source一下生效。
+如下在.bashrc文件中添加：
+alias padoff='synclient touchpadoff=1'
+alias padon='synclient touchpadoff=0'
+以后在终端padoff即关闭触摸板，padon开启触摸板。（经测试bashrc方法效果不好，不如直接终端执行命令效果好）
+
+WAY2:
+安装了Ubuntu最新版本 14.04 之后，发现无线网卡不能使用，偿试安装驱动后，问题解决。
+
+首先确定无线网卡类型：
+
+lspci -vnn -d 14e4:
+
+比如我的网卡类型为
+
+04：00.0 Network controller [0280]:Broadcom Corporation BCM4312 802.11b/g LP-PHY [14e4:4315]
+
+根据网卡类型14e4:4315，对照下面这张表，找到所要安装的驱动，此处我所需要安装的就是wl种类的
+
+安装步骤：
+
+1、先安装b43-fwcutter工具，如下：
+
+下载b43-fwcutter源码：
+
+http://bues.ch/b43/fwcutter/b43-fwcutter-018.tar.bz2
+
+解压后，进入到目录中，执行
+
+make
+
+sudo make install
+
+2、安装驱动
+
+下载驱动文件：
+
+http://www.lwfinger.com/b43-firmware/broadcom-wl-5.100.138.tar.bz2 使用b43-fwcutter工具安装驱动 sudo b43-fwcutter -w /lib/firmware broadcom-wl-5.100.138/linux/wl_apsta.o
+
+3、加载驱动
+
+modprobe b43
+
+加载驱动可能需要时间比较长，请耐心等待。
+
+对于其他种类的无线网卡，可参考网址：
+
+http://wireless.kernel.org/en/users/Drivers/b43#devicefirmware
